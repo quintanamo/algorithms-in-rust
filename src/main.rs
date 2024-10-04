@@ -17,10 +17,12 @@ fn main() {
     let contents: String = fs::read_to_string(input_file_path)
         .expect("File not specified.");
     let numbers: Vec<i32> = contents.split_whitespace().map(|s: &str| s.parse().unwrap()).collect();
+    let numbers_len: usize = numbers.len();
 
     let result: Vec<i32>;
     match algorithm.as_str() {
         "insertion-sort" => result = sorting::insertion_sort(numbers),
+        "merge-sort" => result = sorting::merge_sort(numbers, 0, numbers_len - 1),
         _ => result = Vec::new()
     }
 
