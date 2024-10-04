@@ -30,23 +30,21 @@ mod tests {
     use super::insertion_sort;
     use super::is_sorted;
 
+    const INPUTS: [[i32; 5]; 5] = [[1, 2, 3, 4, 5], [5, 4, 3, 2, 1], [1, 1, 1, 2, 3], [5, 1, 4, 2, 3], [5, 1, 2, 5, 5]];
+
     #[test]
     fn test_is_sorted() {
-        let mut input: Vec<i32> = [5,2,3,1,4].to_vec();
-        assert_eq!(is_sorted(input), false);
-        input = [1, 2, 3, 4, 5].to_vec();
-        assert_eq!(is_sorted(input), true);
-        input = [1, 1, 2, 2, 3].to_vec();
-        assert_eq!(is_sorted(input), true);
+        const EXPECTED_RESULTS: [bool; 5] = [true, false, true, false, false];
+        for i in 0..INPUTS.len() {
+            assert_eq!(is_sorted(INPUTS[i].to_vec()), EXPECTED_RESULTS[i]);
+        }
     }
 
     #[test]
     fn test_insertion_sort() {
-        let mut input: Vec<i32> = [5,2,3,1,4].to_vec();
-        let mut output: Vec<i32> = insertion_sort(input);
-        assert_eq!(is_sorted(output), true);
-        input = [1, 1, 2, 1, 1].to_vec();
-        output = insertion_sort(input);
-        assert_eq!(is_sorted(output), true);
+        for i in 0..INPUTS.len() {
+            let sorted: Vec<i32> = insertion_sort(INPUTS[i].to_vec());
+            assert_eq!(is_sorted(sorted), true);
+        }
     }
 }
