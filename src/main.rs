@@ -23,6 +23,7 @@ fn main() {
     match algorithm.as_str() {
         "insertion-sort" => result = sorting::insertion_sort(numbers),
         "merge-sort" => result = sorting::merge_sort(numbers, 0, numbers_len - 1),
+        "heap-sort" => result = sorting::heap_sort(numbers),
         _ => result = Vec::new()
     }
 

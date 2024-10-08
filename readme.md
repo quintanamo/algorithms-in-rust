@@ -5,3 +5,4 @@ This repo is just a few various algorithms I implemented in Rust to get some pra
 #### Sorting Algorithms:
 - Insertion Sort
 - Merge Sort
+- Heap Sort

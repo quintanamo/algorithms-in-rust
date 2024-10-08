@@ -73,6 +73,46 @@ fn merge(input: Vec<i32>, left: usize, middle: usize, right: usize) -> Vec<i32> 
 
 /*
 
+    MERGE SORT
+
+*/
+pub fn heap_sort(input: Vec<i32>) -> Vec<i32> {
+    let mut sorted: Vec<i32> = input;
+    let input_len: usize = sorted.len();
+    for i in (0..((input_len/2))).rev() {
+        sorted = heapify(sorted, input_len, i);
+    }
+    for i in (1..(input_len)).rev() {
+        let temp = sorted[0];
+        sorted[0] = sorted[i];
+        sorted[i] = temp;
+        sorted = heapify(sorted, i, 0);
+    }
+    return sorted;
+}
+
+fn heapify(input: Vec<i32>, len: usize, i: usize) -> Vec<i32> {
+    let mut heap: Vec<i32> = input;
+    let mut largest: usize = i;
+    let left_index: usize = 2 * i + 1;
+    let right_index: usize = 2 * i + 2;
+    if left_index < len && heap[left_index] > heap[largest] {
+        largest = left_index;
+    }
+    if right_index < len && heap[right_index] > heap[largest] {
+        largest = right_index;
+    }
+    if largest != i {
+        let temp: i32 = heap[i];
+        heap[i] = heap[largest];
+        heap[largest] = temp;
+        return heapify(heap, len, largest);
+    }
+    return heap;
+}
+
+/*
+
     UTILITY FUNCTIONS
 
 */
@@ -91,6 +131,8 @@ fn is_sorted(input: Vec<i32>) -> bool {
 
 #[cfg(test)]
 mod tests {
+    use crate::sorting::heap_sort;
+
     use super::insertion_sort;
     use super::merge_sort;
     use super::is_sorted;
@@ -117,7 +159,14 @@ mod tests {
     fn test_merge_sort() {
         for i in 0..INPUTS.len() {
             let sorted: Vec<i32> = merge_sort(INPUTS[i].to_vec(), 0, INPUTS[i].len() - 1);
-            println!("{sorted:?}");
+            assert_eq!(is_sorted(sorted), true);
+        }
+    }
+
+    #[test]
+    fn test_heap_sort() {
+        for i in 0..INPUTS.len() {
+            let sorted: Vec<i32> = heap_sort(INPUTS[i].to_vec());
             assert_eq!(is_sorted(sorted), true);
         }
     }
